@@ -67,7 +67,7 @@ function build_uboot()
 function clean_uboot()
 {
 	cd $UBOOT_DIR
-	make distclean
+	make O=out distclean
 }
 
 function build_kernel()
@@ -91,7 +91,7 @@ function build_kernel()
 function clean_kernel()
 {
 	cd $KERNEL_DIR
-	make distclean
+	make O=out distclean
 }
 
 function build_buildroot()
