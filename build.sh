@@ -189,6 +189,9 @@ function build_tslib()
 {
 	###build tslib
 	cd $TSLIB_DIR
+	
+	autoreconf -ivf
+
 	./configure --host=arm-linux ac_cv_func_malloc_0_nonnull=yes \
 		 --enable-linear=static --enable-input=static \
 		 --enable-pthres=static --enable-variance=static --enable-dejitter=static \
