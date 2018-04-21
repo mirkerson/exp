@@ -1,0 +1,30 @@
+1.NFS
+/data/exp/target *(rw,sync,no_root_squash,no_subtree_check)
+
+CONFIG_CMDLINE="noinitrd console=ttyS0,115200 root=/dev/nfs rw nfsroot=192.168.0.211:/data/exp/target,nolock ip=192.168.0.219:192.168.0.211:192.168.0.1:255.255.255.0::eth0:off"
+
+
+2.gdb&gdb server
+
+cd gdb-7.6
+
+./configure --target=arm-linux --disable-werror --program-prefix=arm-linux-
+
+cd gdb/gdbserver
+
+./configure --target=arm-linux --disable-werror --host=arm-linux- CC=arm-linux-gnueabihf-gcc
+
+3.sshd
+
+/etc/ssh/sshd_config
+PermitEmptyPasswords yes
+PermitRootLogin yes 
+
+
+3.cmake debug ver
+
+SET(CMAKE_C_COMPILER "arm-linux-gnueabihf-gcc")
+set( CMAKE_BUILD_TYPE Debug )
+
+
+
