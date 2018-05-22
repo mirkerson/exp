@@ -84,7 +84,7 @@
                 compatible = "goodix,gt911";
                 reg = <0x14>;
                 interrupt-parent = <&pio>;
-                interrupts = <1 1 IRQ_TYPE_LEVEL_HIGH>;
+                interrupts = <1 1 IRQ_TYPE_LEVEL_LOW>;
 		irq-gpio = <&pio 1 1 GPIO_ACTIVE_LOW>;
                 reset-gpio = <&pio 1 0 GPIO_ACTIVE_LOW>;		
         };

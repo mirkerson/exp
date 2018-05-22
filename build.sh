@@ -89,8 +89,6 @@ function build_buildroot()
 	echo "Build buildroot"
 
 	cd $BUILDROOT_DIR
-	
-	make distclean
 
 	cp configs/mangopi_buildroot_config .config
 
@@ -244,7 +242,8 @@ function pack()
 	cp $QT_SRC_DIR/instal/lib/libQtNetwork.so.4.8.6 $TARGET_DIR/lib/ -af
 	cp $QT_SRC_DIR/instal/lib/libQtCore.so.4 $TARGET_DIR/lib/ -af
 	cp $QT_SRC_DIR/instal/lib/libQtCore.so.4.8.6 $TARGET_DIR/lib/ -af
-	mkdir -p $TARGET_DIR/etc/fonts
+	mkdir -p $TARGET_DIR/lib/fonts
+	cp $QT_SRC_DIR/instal/lib/fonts/fixed_120_50.qpf $TARGET_DIR/lib/fonts -arf
 	cp $QT_SRC_DIR/demos/embedded/styledemo/styledemo $TARGET_DIR/bin/
 
 	arm-linux-gnueabihf-strip $TARGET_DIR/lib/*.so
@@ -253,6 +252,13 @@ function pack()
 		echo "" >> $TARGET_DIR/etc/profile
 		echo "export QT_QWS_FONTDIR=/lib/fonts" >> $TARGET_DIR/etc/profile
 		echo "export QWS_MOUSE_PROTO=LinuxInput:/dev/input/event1" >> $TARGET_DIR/etc/profile
+	fi
+
+		if [ `grep -c "QT_QWS_FONTDIR" $TARGET_DIR/etc/init.d/rcS` -eq '0' ]; then
+		echo "" >> $TARGET_DIR/etc/init.d/rcS
+		echo "export QT_QWS_FONTDIR=/lib/fonts" >> $TARGET_DIR/etc/init.d/rcS
+		echo "export QWS_MOUSE_PROTO=LinuxInput:/dev/input/event1" >> $TARGET_DIR/etc/init.d/rcS
+		echo "styledemo -qws &" >> $TARGET_DIR/etc/init.d/rcS
 
 	fi
 	
