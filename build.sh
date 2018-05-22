@@ -204,7 +204,7 @@ function build_qt()
 
 function clean_qt()
 {
-	cd $QT_DIR
+	cd $QT_SRC_DIR
 	rm -rf instal
 	make distclean
 }
