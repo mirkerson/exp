@@ -185,9 +185,8 @@ function build_qt()
 	-I$MINIGUI_INC_DIR \
 	-L$MINIGUI_LIB_DIR \
 	-D QT_QWS_CLIENTBLIT \
-	-qt-mouse-linuxinput
+	-qt-mouse-linuxinput \
 	-no-mouse-linuxtp \
-	-plugin-mouse-tslib \
 	-nomake tools \
 	-nomake docs  \
 	-no-webkit \
