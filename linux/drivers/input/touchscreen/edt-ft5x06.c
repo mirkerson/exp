@@ -226,6 +226,7 @@ static irqreturn_t edt_ft5x06_ts_isr(int irq, void *dev_id)
 	for (i = 0; i < tsdata->max_support_points; i++) {
 		u8 *buf = &rdbuf[i * tplen + offset];
 		bool down;
+		
 
 		type = buf[0] >> 6;
 		/* ignore Reserved events */
@@ -246,6 +247,19 @@ static irqreturn_t edt_ft5x06_ts_isr(int irq, void *dev_id)
 
 		if (!down)
 			continue;
+		/*modify by kerson , print x y point ,fix it */
+		//printk("before ft5x06 x:%d y:%d\n", x, y);
+		{
+			int tmp = x;
+			x = y;
+			y = tmp;
+			
+			x = (800*x)/480;
+
+			y = 272 - y;
+			y = (480*y)/272;
+		}
+		//printk("after ft5x06 x:%d y:%d\n", x, y);	
 
 		touchscreen_report_pos(tsdata->input, &tsdata->prop, x, y,
 				       true);
@@ -919,8 +933,8 @@ static int edt_ft5x06_ts_probe(struct i2c_client *client,
 		return error;
 	}
 
-	tsdata->wake_gpio = devm_gpiod_get_optional(&client->dev,
-						    "wake", GPIOD_OUT_LOW);
+	tsdata->wake_gpio = 0;
+
 	if (IS_ERR(tsdata->wake_gpio)) {
 		error = PTR_ERR(tsdata->wake_gpio);
 		dev_err(&client->dev,

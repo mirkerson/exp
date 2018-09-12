@@ -88,6 +88,16 @@
 		irq-gpio = <&pio 1 1 GPIO_ACTIVE_LOW>;
                 reset-gpio = <&pio 1 0 GPIO_ACTIVE_LOW>;		
         };
+	ft5x: touchscreen@38 {
+		compatible = "edt,edt-ft5406";
+		reg = <0x38>;
+		interrupt-parent = <&pio>;
+		interrupts = <1 1 IRQ_TYPE_LEVEL_LOW>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&gt911_int_pin>;
+		irq-gpio = <&pio 1 1 GPIO_ACTIVE_LOW>;
+                reset-gpio = <&pio 1 0 GPIO_ACTIVE_LOW>;	
+	};
 };
 
 &uart0 {
